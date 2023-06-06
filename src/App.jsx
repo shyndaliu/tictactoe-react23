@@ -5,9 +5,28 @@ import Grid from './components/Grid';
 import img0 from './assets/0.png'
 import img1 from './assets/1.png'
 import img2 from './assets/2.png'
+import img3 from './assets/3.png'
+
+import { useEffect } from "react";
 
 function App() {
-  
+  const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const handleThemeSwitch = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  window.addEventListener('keydown', handleThemeSwitch);
+
+  console.log(theme);
 
 
   const winCases = [
@@ -21,7 +40,7 @@ function App() {
     [3, 5, 7]
   ]
 
-  const imgSources = [img2, img0, img1];
+  const imgSources = [img2, img0, img1, img3];
 
   const [grid, setGrid] = useState([
     { id: 1, img: 0, checked: false},
@@ -65,7 +84,7 @@ function App() {
   while(checkWin() == undefined){
     return (<>
     <MainLayout>
-      <Grid grid={grid} handlePlay={handlePlay} imgSources={imgSources}/>
+      <Grid grid={grid} handlePlay={handlePlay} imgSources={imgSources} theme={theme}/>
     </MainLayout>
     </>);
   }
